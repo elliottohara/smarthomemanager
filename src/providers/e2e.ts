@@ -1,13 +1,13 @@
 import * as Wemo from 'wemo-client';
 import * as Bulb from 'tplink-lightbulb';
-import { TpLinkDiscoverer } from "./TpLink/TpLinkDiscoverer";
+import { TpLinkLightBulbFactory } from "./TpLink/TpLinkLightBulbFactory";
 import { TpLinkLightBulb } from "./TpLink/TpLinkLightBulb";
-import { WemoDiscoverer } from './Wemo/WemoDiscoverer';
+import { WemoDeviceFactory } from './Wemo/WemoDeviceFactory';
 /* this is just a few end2end tests, execute them on a network with the proper devices */
 // Wemo();
 TpLink();
 function TpLink() {
-    let stream = new TpLinkDiscoverer();
+    let stream = new TpLinkLightBulbFactory();
     stream.onDeviceDiscovered((bulb) => {
         console.log(JSON.stringify(bulb['info']));
         bulb.OnStateChange( (state) => {
@@ -18,10 +18,10 @@ function TpLink() {
 }
 
 function Wemo() {
-    let stream = new WemoDiscoverer();
+    let stream = new WemoDeviceFactory();
     stream.onDeviceDiscovered((bulb) => {
         bulb.OnStateChange( (state) => {
-            console.log(bulb['wemoBulb'].device.friendlyName + JSON.stringify(state) );
+            console.log(bulb['vendorDevice'].device.friendlyName + JSON.stringify(state) );
         });
     });
     stream.connect();

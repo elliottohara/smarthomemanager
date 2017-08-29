@@ -1,7 +1,7 @@
 import { Device } from './Device';
 import { EventEmitter } from 'events';
 
-export abstract class Discoverer<TServiceClient extends Device> extends EventEmitter {
+export abstract class DeviceFactory<TServiceClient extends Device> extends EventEmitter {
     private deviceDiscovered = 'DeviceDiscovered';
     private _clients: Array<TServiceClient>;
     constructor() {

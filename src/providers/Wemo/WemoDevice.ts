@@ -2,13 +2,15 @@ import * as Wemo from 'wemo-client';
 import { Device } from "../Device";
 
 export class WemoDevice extends Device {
-    constructor(public wemoBulb: Wemo) {
+    constructor(public vendorDevice: Wemo) {
         super();
-        wemoBulb.on('binaryState', (state) => {
-            this.emit(this.stateChangeEvent, state);
+        this.DeviceName = vendorDevice.device.friendlyName;
+        this.DeviceId = vendorDevice.device.macAddress;
+        vendorDevice.on('binaryState', (state) => {
+            this.emit(Device.stateChangeEvent, state);
         });
     }
     setState(state: any): void {
-        this.wemoBulb.setBinaryState(state);
+        this.vendorDevice.setBinaryState(state);
     }
 }

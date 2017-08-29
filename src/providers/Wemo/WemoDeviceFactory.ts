@@ -1,8 +1,8 @@
 import * as Wemo from 'wemo-client';
-import { Discoverer } from "../Discoverer";
 import { WemoDevice } from "./WemoDevice";
+import { DeviceFactory } from "../DeviceFactory";
 
-export class WemoDiscoverer extends Discoverer<WemoDevice> {
+export class WemoDeviceFactory extends DeviceFactory<WemoDevice> {
     constructor() {
         super();
     }

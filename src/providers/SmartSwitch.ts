@@ -7,7 +7,7 @@ export abstract class SmartSwitch<TBinaryState> extends Device {
     public static ConvertBoolToNumber = (n:boolean) => n ? 1:0;
     constructor() {
         super();
-        this.on(this.stateChangeEvent, (state) => {
+        this.on(Device.stateChangeEvent, (state) => {
             let event = this.convertNativeState(state) ?
                 SmartSwitch.OnEvent: SmartSwitch.OffEvent;
             this.emit(event, state);
