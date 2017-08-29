@@ -1,14 +1,14 @@
-import { TpLinkServiceStream } from './TpLink/TpLinkServiceStream';
-import { WemoServiceStream } from './Wemo/WemoServiceStream';
 import * as Wemo from 'wemo-client';
 import * as Bulb from 'tplink-lightbulb';
-import { TpLinkServiceClient } from "./TpLink/TpLinkServiceClient";
+import { TpLinkDiscoverer } from "./TpLink/TpLinkDiscoverer";
+import { TpLinkLightBulb } from "./TpLink/TpLinkLightBulb";
+import { WemoDiscoverer } from "./Wemo/WemoServiceStream";
 
 /* this is just a few end2end tests, execute them on a network with the proper devices */
 // Wemo();
 TpLink();
 function TpLink() {
-    let stream = new TpLinkServiceStream();
+    let stream = new TpLinkDiscoverer();
     stream.onDeviceDiscovered((bulb) => {
         console.log(JSON.stringify(bulb['info']));
         bulb.OnStateChange( (state) => {
@@ -19,7 +19,7 @@ function TpLink() {
 }
 
 function Wemo() {
-    let stream = new WemoServiceStream();
+    let stream = new WemoDiscoverer();
     stream.onDeviceDiscovered((bulb) => {
         bulb.OnStateChange( (state) => {
             console.log(bulb['wemoBulb'].device.friendlyName + JSON.stringify(state) );
@@ -32,7 +32,7 @@ function TurnOnTPLinkLight() {
     // an IP of a TpLink bulb 
     const bulbIp = '192.168.1.182';
     const tpLinkBulb = new Bulb(bulbIp);
-    const client = new TpLinkServiceClient(tpLinkBulb, {blah: 'boom'});
+    const client = new TpLinkLightBulb(tpLinkBulb, {blah: 'boom'});
     client.setState(1);
 }
 

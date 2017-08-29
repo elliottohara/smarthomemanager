@@ -1,8 +1,8 @@
-import { ServiceClient } from '../../services/ServiceClient';
+import { Device } from '../../providers/Device';
 import { Bulb } from 'tplink-lightbulb';
 
 const POLL_INTERVAL = 500;
-export class TpLinkServiceClient extends ServiceClient {
+export class TpLinkLightBulb extends Device {
     private state: string;
     constructor(public tpLinkBulb: Bulb, public info: any) {
         super();

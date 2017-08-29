@@ -1,9 +1,8 @@
-import { ServiceStream } from '../ServiceStream';
-import { ServiceClient } from "../ServiceClient";
 import * as TpLink from 'tplink-lightbulb';
-import { TpLinkServiceClient } from './TpLinkServiceClient';
+import { Discoverer } from "../Discoverer";
+import { TpLinkLightBulb } from "./TpLinkLightBulb";
 
-export class TpLinkServiceStream extends ServiceStream<TpLinkServiceClient> {
+export class TpLinkDiscoverer extends Discoverer<TpLinkLightBulb> {
     constructor() {
         super();
     }
@@ -11,7 +10,7 @@ export class TpLinkServiceStream extends ServiceStream<TpLinkServiceClient> {
         TpLink.scan().on('light', (light) => {
             let newBulb = new TpLink(light.host);
             console.log(JSON.stringify(light));
-            let client = new TpLinkServiceClient(newBulb, light);
+            let client = new TpLinkLightBulb(newBulb, light);
             this.addClient(client);
         });
     }
