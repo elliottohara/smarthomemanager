@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "outDir": "dst",
-    "moduleResolution": "node"
+    "outDir": "dist"
   },
   "include": [
     "src/**/*.ts"

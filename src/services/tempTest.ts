@@ -29,10 +29,10 @@ function Wemo() {
 }
 
 function TurnOnTPLinkLight() {
-    // an IP of a TpLink bulb
+    // an IP of a TpLink bulb 
     const bulbIp = '192.168.1.182';
     const tpLinkBulb = new Bulb(bulbIp);
-    const client = new TpLinkServiceClient(tpLinkBulb);
+    const client = new TpLinkServiceClient(tpLinkBulb, {blah: 'boom'});
     client.setState(1);
 }
 
