@@ -5,8 +5,8 @@ import * as Bulb from 'tplink-lightbulb';
 import { TpLinkServiceClient } from "./TpLink/TpLinkServiceClient";
 
 /* this is just a few end2end tests, execute them on a network with the proper devices */
-Wemo();
-// TpLink();
+// Wemo();
+TpLink();
 function TpLink() {
     let stream = new TpLinkServiceStream();
     stream.onDeviceDiscovered((bulb) => {
