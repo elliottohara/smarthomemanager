@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register src/**/*.spec.ts"
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "e2e": "node dist/services/e2e.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "@types/mocha": "^2.2.42",
     "chai": "^4.1.1",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-typescript": "^3.2.2",
     "mocha": "^3.5.0",
     "ts-node": "^3.3.0",
