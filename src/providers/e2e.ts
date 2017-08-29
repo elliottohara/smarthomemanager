@@ -2,8 +2,7 @@ import * as Wemo from 'wemo-client';
 import * as Bulb from 'tplink-lightbulb';
 import { TpLinkDiscoverer } from "./TpLink/TpLinkDiscoverer";
 import { TpLinkLightBulb } from "./TpLink/TpLinkLightBulb";
-import { WemoDiscoverer } from "./Wemo/WemoServiceStream";
-
+import { WemoDiscoverer } from './Wemo/WemoDiscoverer';
 /* this is just a few end2end tests, execute them on a network with the proper devices */
 // Wemo();
 TpLink();

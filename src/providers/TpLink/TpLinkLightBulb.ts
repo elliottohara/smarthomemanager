@@ -1,8 +1,9 @@
 import { Device } from '../../providers/Device';
 import { Bulb } from 'tplink-lightbulb';
+import { SmartSwitch } from "../SmartSwitch";
 
 const POLL_INTERVAL = 500;
-export class TpLinkLightBulb extends Device {
+export class TpLinkLightBulb extends SmartSwitch<number> {
     private state: string;
     constructor(public tpLinkBulb: Bulb, public info: any) {
         super();
@@ -12,6 +13,13 @@ export class TpLinkLightBulb extends Device {
     public setState(state: any): void {
         this.tpLinkBulb.set(state);
     }
+    convertBinaryState(binaryState: boolean): number {
+        return SmartSwitch.ConvertBoolToNumber(binaryState);
+    }
+    convertNativeState(tState: number): boolean {
+        return SmartSwitch.ConvertNumberToBinary(tState);
+    }
+    
     private watch(): void {
         setInterval(() => {
             this.setInfo();
