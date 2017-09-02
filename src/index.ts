@@ -4,17 +4,30 @@ import { DiscovererFactory } from "./providers/DiscovererFactory";
 import { Device } from "./providers/Device";
 import { TpLinkLightBulb } from "./providers/TpLink/TpLinkLightBulb";
 import { TpLinkLightBulbFactory } from "./providers/TpLink/TpLinkLightBulbFactory";
-
+import { Rule } from './Rule';
+import { WemoDeviceFactory } from "./providers/Wemo/WemoDeviceFactory";
+import { WemoDevice } from "./providers/Wemo/WemoDevice";
 // TODO: abstract this, and eventually put a UI on it...
-let rules = {
-    '8012312587D7B641D51DEE59745BF4B7180F8536': {
+
+let rules: { [id: string]: Rule; } = {
+    '6038E04679F0': {
         'EventName': Device.stateChangeEvent,
-        'Callback': (state: any, discoverer: TpLinkLightBulbFactory, bulb: TpLinkLightBulb) => {
+        'Callback': (state: any, discoverer: WemoDeviceFactory, bulb: WemoDevice) => {
+            console.log(`Running rule for device ${bulb.DeviceName}`);
             let target = discoverer.clients
-            .find( (d) => d.DeviceId === '8012121AFF2D68C479B989DD45248AAA1862E940');
-            target.setState(state.on_off);
+            .find( (d) => d.DeviceId === '6038E0466220');
+            target.setState(state);
         }
     },
+    '6038E0466220': {
+        'EventName': Device.stateChangeEvent,
+        'Callback': (state: any, discoverer: WemoDeviceFactory, bulb: WemoDevice) => {
+            console.log(`Running rule for device ${bulb.DeviceName}`);
+            let target = discoverer.clients
+            .find( (d) => d.DeviceId === '6038E04679F0');
+            target.setState(state);
+        }
+    }
 
 };
 

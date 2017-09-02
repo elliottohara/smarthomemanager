@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@types/node": "^8.0.25",
+    "moment": "^2.18.1",
     "tplink-lightbulb": "^1.1.7",
     "wemo-client": "^0.13.0"
   }
