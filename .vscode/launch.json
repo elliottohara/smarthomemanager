@@ -7,11 +7,14 @@
         {
             "type": "node",
             "request": "launch",
+            "preLaunchTask": "Compile",
             "name": "Launch Program",
-            "program": "${workspaceRoot}/dist/providers/e2e.js",
+            "sourceMaps": true,
+            "program": "${workspaceRoot}/src/index.ts",
             "outFiles": [
-                "${workspaceRoot}/out/**/*.js"
+                "${workspaceRoot}/dist/**/*.js"
             ]
+            
         }
     ]
 }
