@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}/dist/services/test.js",
+            "program": "${workspaceRoot}/dist/providers/e2e.js",
             "outFiles": [
                 "${workspaceRoot}/out/**/*.js"
             ]

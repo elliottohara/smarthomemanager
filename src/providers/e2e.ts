@@ -3,9 +3,11 @@ import * as Bulb from 'tplink-lightbulb';
 import { TpLinkLightBulbFactory } from "./TpLink/TpLinkLightBulbFactory";
 import { TpLinkLightBulb } from "./TpLink/TpLinkLightBulb";
 import { WemoDeviceFactory } from './Wemo/WemoDeviceFactory';
+import { NestDeviceFactory } from './Nest/NestDeviceFactory';
 /* this is just a few end2end tests, execute them on a network with the proper devices */
 // Wemo();
-TpLink();
+// TpLink();
+NestStuff();
 function TpLink() {
     let stream = new TpLinkLightBulbFactory();
     stream.onDeviceDiscovered((bulb) => {
@@ -33,5 +35,15 @@ function TurnOnTPLinkLight() {
     const tpLinkBulb = new Bulb(bulbIp);
     const client = new TpLinkLightBulb(tpLinkBulb, {blah: 'boom'});
     client.setState(1);
+}
+
+function NestStuff() {
+    const config = require('../configs/config.json');
+    const factory = new NestDeviceFactory(config);
+    factory.onDeviceDiscovered( (device) => {
+        device.OnStateChange((state) => console.log(state));
+    });
+
+    factory.connect();
 }
 
