@@ -40,7 +40,11 @@ factory.GetAll().forEach((discoverer) => {
         if (rule) {
             console.log(`Found rule for ${device.DeviceName}. Adding....`);
             device.on(rule.EventName, (state) => {
-                rule.Callback(state, discoverer, device);
+                try {
+                    rule.Callback(state, discoverer, device);
+                } catch(error) {
+                    console.error(error);
+                }
             });
         }
     });
