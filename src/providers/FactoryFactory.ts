@@ -13,7 +13,7 @@ export class FactoryFactory {
         ];
     }
     // TODO: I know there's a better way to do this, but for now....
-    public GetDiscoverer(type:{new()}): any {
+    public GetFactory(type:{new()}): any {
         return this.allFactories.find( (factory) => {
             return type.name === factory.constructor.name;
         });

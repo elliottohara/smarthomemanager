@@ -7,9 +7,14 @@ import { TpLinkLightBulbFactory } from "./providers/TpLink/TpLinkLightBulbFactor
 import { Rule } from './Rule';
 import { WemoDeviceFactory } from "./providers/Wemo/WemoDeviceFactory";
 import { WemoDevice } from "./providers/Wemo/WemoDevice";
+import { NestDeviceFactory } from "./providers/Nest/NestDeviceFactory";
+import { NestThermostat } from "./providers/Nest/NestThermostat";
 
 
-let factory = new FactoryFactory();
+const factory = new FactoryFactory();
+const wemoDeviceFactory = factory.GetFactory(WemoDeviceFactory);
+const tpLinkLightBulbFactory = factory.GetFactory(TpLinkLightBulbFactory);
+const nestDeviceFactory = factory.GetFactory(NestDeviceFactory);
 
 // TODO: abstract this, and eventually put a UI on it...
 // The key here is the device id for your smart device
@@ -24,27 +29,26 @@ let factory = new FactoryFactory();
 let rules: { [id: string]: Rule; } = {
     '6038E04679F0': {
         'EventName': Device.stateChangeEvent,
-        'Callback': (state: any, discoverer: WemoDeviceFactory, bulb: WemoDevice) => {
-            let target = discoverer.clients
+        'Callback': (state: any, bulb: WemoDevice) => {
+            let target = wemoDeviceFactory.clients
             .find( (d) => d.DeviceId === '6038E0466220');
             target.setState(state);
         }
     },
     '6038E0466220': {
         'EventName': Device.stateChangeEvent,
-        'Callback': (state: any, discoverer: WemoDeviceFactory, bulb: WemoDevice) => {
-            let target = discoverer.clients
+        'Callback': (state: any, bulb: WemoDevice) => {
+            let target = wemoDeviceFactory.clients
             .find( (d) => d.DeviceId === '6038E04679F0');
             target.setState(state);
         }
     },
     'Nest_22200 Rock Wren': {
         'EventName': 'home',
-        'Callback': () => {
-            let wemoFactory = factory.GetDiscoverer(WemoDeviceFactory);
+        'Callback': (state: any, device: NestThermostat) => {
+            let wemoFactory = factory.GetFactory(WemoDeviceFactory);
             let wemoClient = wemoFactory.clients.find( (d) => d.DeviceId === '6038E04679F0');
-            wemoClient.setState(true);
-
+            wemoClient.setState(1);
         }
     }
 
@@ -61,10 +65,8 @@ factory.GetAll().forEach((discoverer) => {
             device.on(rule.EventName, (state) => {
                 try {
                     console.log(`Running rule for device ${device.DeviceName}`);
-            
-                    // TODO: we should actually send the factoryfactory here, not the specific
                     // factory, that way we can have rules that effect other devices
-                    rule.Callback(state, discoverer, device);
+                    rule.Callback(state, device);
                 } catch(error) {
                     console.error(error);
                 }
