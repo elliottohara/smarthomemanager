@@ -15,6 +15,18 @@
                 "${workspaceRoot}/dist/**/*.js"
             ]
             
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "Compile",
+            "name": "E2E",
+            "sourceMaps": true,
+            "program": "${workspaceRoot}/src/providers/e2e.ts",
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*.js"
+            ]
+            
         }
     ]
 }

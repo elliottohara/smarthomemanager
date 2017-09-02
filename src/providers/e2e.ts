@@ -42,6 +42,12 @@ function NestStuff() {
     const factory = new NestDeviceFactory(config);
     factory.onDeviceDiscovered( (device) => {
         device.OnStateChange((state) => console.log(state));
+        device.on('home', (x) => {
+            console.log("HOME!");
+        })
+        device.on('away', (x)=>{
+            console.log("AWAY");
+        });
     });
 
     factory.connect();

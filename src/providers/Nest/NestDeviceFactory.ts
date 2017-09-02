@@ -1,10 +1,11 @@
 import { DeviceFactory } from "../DeviceFactory";
 import { NestThermostat } from "./NestThermostat";
 import * as Nest from 'unofficial-nest-api';
+const defaultConfig = require('../../configs/config.json');
 
 
 export class NestDeviceFactory extends DeviceFactory<NestThermostat> {
-    constructor(private config: any) {
+    constructor(private config: any = defaultConfig) {
         super();
 
     }
@@ -16,7 +17,13 @@ export class NestDeviceFactory extends DeviceFactory<NestThermostat> {
                 this.emit('error', err);
                 return;
             }
-            this.addClient(new NestThermostat(data));
+            // Need some callbacks to execute before we can identify it,
+            // so don't add client until it emits the event
+            let nestDevice = new NestThermostat(data);
+            nestDevice.on('named', () => {
+                this.addClient(nestDevice);
+            });
+            
         });
     }
 }
